@@ -1,14 +1,56 @@
 import os
 import json
 
+import pandas as pd
+
 from agents.config import model
 from data.data import data
 
 fetched_data = data.get_data()
 
-def extract_journal_entries():
-    # Extract journal entries from a JSON file and format them into the specified structure.
+def extract_entries():
+    # Extracting the metrics list from the JSON
+    metrics = fetched_data.get("journal_entries", [])
+
+    # List to store the extracted data
+    extracted_data = []
+
+    for entry in metrics:
+        # Extract the relevant information
+        date = entry.get("date")
+        entry = entry.get("entry", None)
+         
+        # Create a dictionary for each entry
+        data_entry = {
+            "Date": date,
+            "Entry": entry,
+        }
+
+        # Add the data entry to the list
+        extracted_data.append(data_entry)
+
+    return extracted_data
+
+def get_last_days_journal_entries(days=7):
+    # Extract the metrics
+    extracted_entries = extract_entries()
+
+    # Convert the extracted data into a pandas DataFrame
+    df = pd.DataFrame(extracted_entries)
+
+    # Convert 'date' column to datetime format and ensure it's a datetime index
+    df['Date'] = pd.to_datetime(df['Date'])
+
+    # Set 'date' as the index
+    df.set_index('Date', inplace=True)
+
+    # Get the last 'days' of fitness data
+    last_days_data = df.tail(days)  # Get the last 'days' records
     
+    return last_days_data
+
+
+def extract_journal_entries():
     # Extract user_id and journal entries
     user_id = fetched_data.get("user_id", "unknown")
     journal_entries = fetched_data.get("journal_entries", [])
@@ -22,7 +64,6 @@ def extract_journal_entries():
     # Convert to a JSON string
     formatted_string = json.dumps(formatted_data, indent=4)
     return formatted_string
-
 
 
 def sentimentalize():
@@ -49,4 +90,4 @@ def sentimentalize():
     real_dict = json.loads(cleaned_resp)
 
     # Print the resulting dictionary
-    return real_dict 
+    return real_dict["Sentimental Analysis"]["Summary"] 

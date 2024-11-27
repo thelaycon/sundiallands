@@ -116,36 +116,3 @@ def analyze_fitness(recommended_steps):
     suggestion = real_dict['overall_analysis']['suggestion']
 
     return suggestion
-    
-# Fetch the last 7 days of fitness data
-last_7_days_data = get_last_days_fitness_data(days=7)
-
-# Summarize the last 7 days' data into a single dictionary for analysis
-average_steps = last_7_days_data["Steps Taken"].mean()
-average_calories = last_7_days_data["Calories Burned"].mean()
-average_active_minutes = last_7_days_data["Active Minutes"].mean()
-
-# Create a user data dictionary for recommendations
-user_data = {
-    "Steps": int(average_steps),
-    "Calories_Burned": int(average_calories),
-    "Active_Minutes": int(average_active_minutes),
-}
-
-# Generate recommendations based on user data
-recommendation_result = recommend_steps(user_data)
-
-# Analyze and generate fitness suggestions
-fitness_suggestion = analyze_fitness(recommendation_result)
-
-# Output the last 7 days' data, averages, and suggestions
-print("Last 7 Days' Fitness Data:")
-print(last_7_days_data)
-print("\nAverages:")
-print(f"Steps Taken: {average_steps:.2f}")
-print(f"Calories Burned: {average_calories:.2f}")
-print(f"Active Minutes: {average_active_minutes:.2f}")
-print("\nRecommendation Result:")
-print(recommendation_result)
-print("\nFitness Suggestion:")
-print(fitness_suggestion)

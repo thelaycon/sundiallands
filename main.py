@@ -1,8 +1,10 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+
 from agents.sleep_analysis import analyze_sleep, get_last_days_sleep_data
 from agents.fitness_tracking import analyze_fitness, get_last_days_fitness_data, recommend_steps
+from agents.journal_sentimental_analysis import sentimentalize, get_last_days_journal_entries
 
 # App title
 st.title("Personal Health Dashboard")
@@ -29,9 +31,12 @@ if section == "Health Suggestions":
 
     # Sleep Patterns Visualization
     if not df_sleep.empty:
-        st.subheader("Sleep Patterns")
+        # Reset the index to make 'Date' a column
+        df_sleep_reset = df_sleep.reset_index()
+
+        # Sleep Patterns Visualization
         fig_sleep = px.line(
-            df_sleep, 
+            df_sleep_reset, 
             x='Date', 
             y='Sleep Duration', 
             title="Hours of Sleep Over Time",
@@ -42,13 +47,16 @@ if section == "Health Suggestions":
     else:
         st.warning("No sleep data available for visualization.")
 
+
     # Fitness Patterns Visualization
     if not df_fitness.empty:
         st.subheader("Fitness Patterns")
 
+        df_fitness_reset = df_fitness.reset_index()
+
         # Steps Taken
         fig_steps = px.bar(
-            df_fitness, 
+            df_fitness_reset, 
             x='Date', 
             y='Steps Taken', 
             title="Daily Steps Taken",
@@ -60,7 +68,7 @@ if section == "Health Suggestions":
 
         # Calories Burned
         fig_calories = px.line(
-            df_fitness, 
+            df_fitness_reset, 
             x='Date', 
             y='Calories Burned', 
             title="Calories Burned Over Time",
@@ -130,13 +138,26 @@ elif section == "Fitness Analysis":
         st.warning("No fitness data available for analysis.")
 
 # Journal Analysis Section
+# Journal Analysis Section
 elif section == "Journal Analysis":
+    # Get the summary and journal entries
+    summary = sentimentalize()
+    journal_entries = get_last_days_journal_entries()
+
     st.header("Journal Analysis")
-    st.success("Highlight: Journaling helps manage stress and track goals. Reflect daily on progress and gratitude.")
+
+    # Display the summary as a highlight
+    st.success(f"Highlight: {summary}")
+    
+    # Review of daily reflections
     st.write("Review your daily reflections:")
-    st.write("""
-    Example Journals:
-    - 2024-11-20: "Had a productive day, walked 10,000 steps!"
-    - 2024-11-21: "Felt a bit tired but managed to exercise."
-    - 2024-11-22: "Focused on relaxation and self-care."
-    """)
+
+    if not journal_entries.empty:
+        # Reset index to include 'Date' as a column for better display
+        journal_entries_reset = journal_entries.reset_index()
+
+        # Display journal entries
+        for _, row in journal_entries_reset.iterrows():
+            st.write(f"**{row['Date'].strftime('%Y-%m-%d')}**: {row['Entry']}")
+    else:
+        st.warning("No journal entries found for the last 7 days.")

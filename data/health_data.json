@@ -1,139 +1,140 @@
 {
-  "user_id": "12345",
-  "metrics": [
+    "user_id": "98765",
+    "metrics": [
       {
-          "date": "2024-11-22",
-          "steps": 8500,
-          "heart_rate": 75,
-          "hrv": 45,
-          "calories_burned": 300,
-          "active_minutes": 45,
-          "sleep_data": {
-              "duration": 10.5,
-              "disturbances": 3
-          }
+        "date": "2024-11-22",
+        "steps": 6000,
+        "heart_rate": 72,
+        "hrv": 45,
+        "calories_burned": 230,
+        "active_minutes": 28,
+        "sleep_data": {
+          "duration": 6.0,
+          "disturbances": 4
+        }
       },
       {
-          "date": "2024-11-21",
-          "steps": 9500,
-          "heart_rate": 72,
-          "hrv": 50,
-          "calories_burned": 350,
-          "active_minutes": 50,
-          "sleep_data": {
-              "duration": 17.2,
-              "disturbances": 2
-          }
+        "date": "2024-11-21",
+        "steps": 9000,
+        "heart_rate": 77,
+        "hrv": 50,
+        "calories_burned": 320,
+        "active_minutes": 48,
+        "sleep_data": {
+          "duration": 5.0,
+          "disturbances": 6
+        }
       },
       {
-          "date": "2024-11-20",
-          "steps": 7800,
-          "heart_rate": 70,
-          "hrv": 42,
-          "calories_burned": 280,
-          "active_minutes": 40,
-          "sleep_data": {
-              "duration": 5.8,
-              "disturbances": 4
-          }
+        "date": "2024-11-20",
+        "steps": 7500,
+        "heart_rate": 74,
+        "hrv": 47,
+        "calories_burned": 290,
+        "active_minutes": 42,
+        "sleep_data": {
+          "duration": 7.2,
+          "disturbances": 2
+        }
       },
       {
-          "date": "2024-11-19",
-          "steps": 10200,
-          "heart_rate": 77,
-          "hrv": 47,
-          "calories_burned": 400,
-          "active_minutes": 60,
-          "sleep_data": {
-              "duration": 7.5,
-              "disturbances": 1
-          }
+        "date": "2024-11-19",
+        "steps": 10500,
+        "heart_rate": 80,
+        "hrv": 52,
+        "calories_burned": 400,
+        "active_minutes": 60,
+        "sleep_data": {
+          "duration": 4.0,
+          "disturbances": 8
+        }
       },
       {
-          "date": "2024-11-18",
-          "steps": 6700,
-          "heart_rate": 68,
-          "hrv": 44,
-          "calories_burned": 250,
-          "active_minutes": 35,
-          "sleep_data": {
-              "duration": 6.1,
-              "disturbances": 3
-          }
+        "date": "2024-11-18",
+        "steps": 6700,
+        "heart_rate": 71,
+        "hrv": 44,
+        "calories_burned": 260,
+        "active_minutes": 38,
+        "sleep_data": {
+          "duration": 5.5,
+          "disturbances": 7
+        }
       },
       {
-          "date": "2024-11-17",
-          "steps": 8900,
-          "heart_rate": 74,
-          "hrv": 48,
-          "calories_burned": 320,
-          "active_minutes": 55,
-          "sleep_data": {
-              "duration": 6.8,
-              "disturbances": 2
-          }
+        "date": "2024-11-17",
+        "steps": 8200,
+        "heart_rate": 75,
+        "hrv": 46,
+        "calories_burned": 310,
+        "active_minutes": 50,
+        "sleep_data": {
+          "duration": 8.0,
+          "disturbances": 3
+        }
       },
       {
-          "date": "2024-11-16",
-          "steps": 9100,
-          "heart_rate": 73,
-          "hrv": 51,
-          "calories_burned": 330,
-          "active_minutes": 50,
-          "sleep_data": {
-              "duration": 7.0,
-              "disturbances": 1
-          }
+        "date": "2024-11-16",
+        "steps": 9300,
+        "heart_rate": 78,
+        "hrv": 49,
+        "calories_burned": 330,
+        "active_minutes": 53,
+        "sleep_data": {
+          "duration": 5.8,
+          "disturbances": 6
+        }
       },
       {
-          "date": "2024-11-15",
-          "steps": 6200,
-          "heart_rate": 71,
-          "hrv": 40,
-          "calories_burned": 220,
-          "active_minutes": 30,
-          "sleep_data": {
-              "duration": 5.5,
-              "disturbances": 5
-          }
+        "date": "2024-11-15",
+        "steps": 9800,
+        "heart_rate": 76,
+        "hrv": 48,
+        "calories_burned": 340,
+        "active_minutes": 55,
+        "sleep_data": {
+          "duration": 4.2,
+          "disturbances": 7
+        }
       },
       {
-          "date": "2024-11-14",
-          "steps": 10400,
-          "heart_rate": 78,
-          "hrv": 52,
-          "calories_burned": 420,
-          "active_minutes": 65,
-          "sleep_data": {
-              "duration": 7.8,
-              "disturbances": 1
-          }
+        "date": "2024-11-14",
+        "steps": 7100,
+        "heart_rate": 73,
+        "hrv": 45,
+        "calories_burned": 270,
+        "active_minutes": 36,
+        "sleep_data": {
+          "duration": 6.5,
+          "disturbances": 5
+        }
       },
       {
-          "date": "2024-11-13",
-          "steps": 8000,
-          "heart_rate": 75,
-          "hrv": 46,
-          "calories_burned": 290,
-          "active_minutes": 40,
-          "sleep_data": {
-              "duration": 6.0,
-              "disturbances": 3
-          }
+        "date": "2024-11-13",
+        "steps": 8500,
+        "heart_rate": 79,
+        "hrv": 50,
+        "calories_burned": 330,
+        "active_minutes": 49,
+        "sleep_data": {
+          "duration": 4.7,
+          "disturbances": 7
+        }
       }
-  ],
-  "journal_entries": [
+    ],
+    "journal_entries": [
       {
-          "date": "2024-11-22",
-          "entry": "I feel really anxious about the upcoming presentation. It's overwhelming."
+        "date": "2024-11-22",
+        "entry": "Sleep wasn't too great again. I feel sluggish and not well-rested."
       },
       {
-          "date": "2024-11-21",
-          "entry": "Felt motivated today but struggled with focus during work hours."
+        "date": "2024-11-21",
+        "entry": "I pushed through a workout today despite poor sleep, but felt off all day."
       },
       {
-          "date": "2024-11-20",
-          "entry": "Exhausted and had trouble sleeping. Need to work on managing stress."
+        "date": "2024-11-20",
+        "entry": "Had a bit better sleep, but still woke up several times. Not sure what's going on."
       }
-  ]
-}
+    ]
+  }
+  

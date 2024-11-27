@@ -23,9 +23,9 @@ def extract_metrics():
         
         # Create a dictionary for each entry
         data_entry = {
-            "date": date,
-            "sleep_duration": sleep_duration,
-            "sleep_disturbances": sleep_disturbances
+            "Date": date,
+            "Sleep Duration": sleep_duration,
+            "Sleep Disturbances": sleep_disturbances
         }
 
         # Add the data entry to the list
@@ -33,15 +33,16 @@ def extract_metrics():
 
     return extracted_data
 
+
 def prepare_data_for_arima(extracted_data, column):
     # Convert the extracted data into a pandas DataFrame
     df = pd.DataFrame(extracted_data)
 
     # Convert 'date' column to datetime format and ensure it's a datetime index
-    df['date'] = pd.to_datetime(df['date'])
+    df['Date'] = pd.to_datetime(df['Date'])
     
     # Set 'date' as the index and ensure that the frequency is daily
-    df.set_index('date', inplace=True)
+    df.set_index('Date', inplace=True)
     df = df.asfreq('D')  # Set the frequency to daily (adjust if needed)
 
     # Select the specified column for forecasting (e.g., 'sleep_duration')
@@ -77,23 +78,20 @@ def get_last_days_sleep_data(days=7):
     df = pd.DataFrame(extracted_metrics)
 
     # Convert 'date' column to datetime format and ensure it's a datetime index
-    df['date'] = pd.to_datetime(df['date'])
+    df['Date'] = pd.to_datetime(df['Date'])
 
     # Set 'date' as the index
-    df.set_index('date', inplace=True)
+    df.set_index('Date', inplace=True)
 
     # Get the last 'days' of sleep data
     last_days_data = df.tail(days)  # Get the last 'days' records
-
-    last_days_data.rename(columns={"sleep_duration":"Hours Slept", "sleep_disturbances":"Number of Disturbances"}, errors='raise', inplace=True)
-    last_days_data.rename_axis("Date", inplace=True)
     
     return last_days_data
 
 def forecast_and_combine(days=7):
     # Extract the metrics and prepare the data for ARIMA (forecasting 'sleep_duration')
     extracted_metrics = extract_metrics()
-    time_series_data = prepare_data_for_arima(extracted_metrics, column='sleep_duration')
+    time_series_data = prepare_data_for_arima(extracted_metrics, column='Sleep Duration')
 
     # Apply ARIMA to forecast future 'sleep_duration' values
     forecast_df = forecast_with_arima(time_series_data, steps_ahead=days)

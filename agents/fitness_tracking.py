@@ -3,6 +3,55 @@ import joblib
 
 import pandas as pd
 from agents.config import model
+from data.data import data
+
+fetched_data = data.get_data()
+
+def extract_metrics():
+    # Extracting the metrics list from the JSON
+    metrics = fetched_data.get("metrics", [])
+
+    # List to store the extracted data
+    extracted_data = []
+
+    for entry in metrics:
+        # Extract the relevant information
+        date = entry.get("date")
+        calories_burned = entry.get("calories_burned", None)
+        active_minutes = entry.get("active_minutes", None)
+        steps_taken = entry.get("steps", None)
+        
+        # Create a dictionary for each entry
+        data_entry = {
+            "Date": date,
+            "Calories Burned": calories_burned,
+            "Active Minutes": active_minutes,
+            "Steps Taken": steps_taken
+        }
+
+        # Add the data entry to the list
+        extracted_data.append(data_entry)
+
+    return extracted_data
+
+def get_last_days_fitness_data(days=7):
+    # Extract the metrics
+    extracted_metrics = extract_metrics()
+
+    # Convert the extracted data into a pandas DataFrame
+    df = pd.DataFrame(extracted_metrics)
+
+    # Convert 'date' column to datetime format and ensure it's a datetime index
+    df['Date'] = pd.to_datetime(df['Date'])
+
+    # Set 'date' as the index
+    df.set_index('Date', inplace=True)
+
+    # Get the last 'days' of fitness data
+    last_days_data = df.tail(days)  # Get the last 'days' records
+    
+    return last_days_data
+
 
 def recommend_steps(user_data, model_path='models/fitness/fitness_kmeans_model.pkl', scaler_path='models/fitness/fitness_scaler.pkl'):
     # Recommend new target steps based on a user's activity data.
@@ -64,11 +113,39 @@ def analyze_fitness(recommended_steps):
     # Convert the cleaned string into a Python dictionary
     real_dict = json.loads(cleaned_resp)
 
-    # Print the resulting dictionary
-    return real_dict
-    
-# Example usage:
-new_user_data = {'Steps': 10, 'Calories_Burned': 0, 'Active_Minutes': 55}
-result = recommend_steps(new_user_data)
+    suggestion = real_dict['overall_analysis']['suggestion']
 
-print(analyze_fitness(result))
+    return suggestion
+    
+# Fetch the last 7 days of fitness data
+last_7_days_data = get_last_days_fitness_data(days=7)
+
+# Summarize the last 7 days' data into a single dictionary for analysis
+average_steps = last_7_days_data["Steps Taken"].mean()
+average_calories = last_7_days_data["Calories Burned"].mean()
+average_active_minutes = last_7_days_data["Active Minutes"].mean()
+
+# Create a user data dictionary for recommendations
+user_data = {
+    "Steps": int(average_steps),
+    "Calories_Burned": int(average_calories),
+    "Active_Minutes": int(average_active_minutes),
+}
+
+# Generate recommendations based on user data
+recommendation_result = recommend_steps(user_data)
+
+# Analyze and generate fitness suggestions
+fitness_suggestion = analyze_fitness(recommendation_result)
+
+# Output the last 7 days' data, averages, and suggestions
+print("Last 7 Days' Fitness Data:")
+print(last_7_days_data)
+print("\nAverages:")
+print(f"Steps Taken: {average_steps:.2f}")
+print(f"Calories Burned: {average_calories:.2f}")
+print(f"Active Minutes: {average_active_minutes:.2f}")
+print("\nRecommendation Result:")
+print(recommendation_result)
+print("\nFitness Suggestion:")
+print(fitness_suggestion)

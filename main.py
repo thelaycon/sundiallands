@@ -1,14 +1,8 @@
 import streamlit as st
-from streamlit_lottie import st_lottie
-
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-
+import plotly.express as px
 from agents.sleep_analysis import analyze_sleep, get_last_days_sleep_data
-
-# Get current suggestion
-sleep_suggestion = analyze_sleep()
+from agents.fitness_tracking import analyze_fitness, get_last_days_fitness_data, recommend_steps
 
 # App title
 st.title("Personal Health Dashboard")
@@ -16,8 +10,12 @@ st.title("Personal Health Dashboard")
 # Sidebar navigation
 section = st.sidebar.selectbox(
     "Navigate to:", 
-    ["Health Suggestions", "Sleep Analysis", "Fitness Analysis", "Journal Analysis", "Visualizations"]
+    ["Health Suggestions", "Sleep Analysis", "Fitness Analysis", "Journal Analysis"]
 )
+
+# Fetch initial data for visualizations
+df_sleep = get_last_days_sleep_data()
+df_fitness = get_last_days_fitness_data()
 
 # Health Suggestions Section
 if section == "Health Suggestions":
@@ -29,52 +27,112 @@ if section == "Health Suggestions":
     - Keep a daily journal for mental clarity and reflection.
     """)
 
+    # Sleep Patterns Visualization
+    if not df_sleep.empty:
+        st.subheader("Sleep Patterns")
+        fig_sleep = px.line(
+            df_sleep, 
+            x='Date', 
+            y='Sleep Duration', 
+            title="Hours of Sleep Over Time",
+            labels={'Date': 'Date', 'Sleep Duration': 'Hours Slept'},
+            markers=True
+        )
+        st.plotly_chart(fig_sleep)
+    else:
+        st.warning("No sleep data available for visualization.")
+
+    # Fitness Patterns Visualization
+    if not df_fitness.empty:
+        st.subheader("Fitness Patterns")
+
+        # Steps Taken
+        fig_steps = px.bar(
+            df_fitness, 
+            x='Date', 
+            y='Steps Taken', 
+            title="Daily Steps Taken",
+            labels={'Date': 'Date', 'Steps Taken': 'Steps'},
+            color='Steps Taken',
+            color_continuous_scale='Viridis'
+        )
+        st.plotly_chart(fig_steps)
+
+        # Calories Burned
+        fig_calories = px.line(
+            df_fitness, 
+            x='Date', 
+            y='Calories Burned', 
+            title="Calories Burned Over Time",
+            labels={'Date': 'Date', 'Calories Burned': 'Calories'},
+            markers=True,
+            line_shape='spline'
+        )
+        st.plotly_chart(fig_calories)
+    else:
+        st.warning("No fitness data available for visualization.")
+
 # Sleep Analysis Section
 elif section == "Sleep Analysis":
+    sleep_suggestion = analyze_sleep()
+
     st.header("Sleep Analysis")
-    
-    # Highlight
     st.success(f"Highlight: {sleep_suggestion}")
- 
-    # Analysis
     st.write("Analyze your sleep patterns below:")
 
-    df_sleep = get_last_days_sleep_data()
-    
     st.write(df_sleep)
-    avg_sleep = df_sleep['Hours Slept'].mean()
-    st.write(f"Average Sleep Hours in the Last Week: {avg_sleep:.2f} hours")
-    if avg_sleep < 7:
-        st.warning("Your average sleep is below the recommended 7-8 hours. Try to establish a consistent bedtime.")
+    if not df_sleep.empty:
+        avg_sleep = df_sleep['Sleep Duration'].mean()
+        st.write(f"Average Sleep Hours in the Last Week: {avg_sleep:.2f} hours")
+        if avg_sleep < 7:
+            st.warning("Your average sleep is below the recommended 7-8 hours. Try to establish a consistent bedtime.")
+    else:
+        st.warning("No sleep data available for analysis.")
 
 # Fitness Analysis Section
 elif section == "Fitness Analysis":
     st.header("Fitness Analysis")
-    
-    # Highlight
-    st.success("Highlight: Aiming for 8,000-10,000 steps daily improves cardiovascular health and endurance.")
-    
-    # Analysis
-    st.write("Track your activity patterns:")
-    fitness_data = {
-        'Date': pd.date_range(start='2024-11-20', periods=7),
-        'Steps Taken': [5000, 7000, 8000, 6000, 10000, 7500, 8000]
-    }
-    df_fitness = pd.DataFrame(fitness_data)
-    st.write(df_fitness)
-    total_steps = df_fitness['Steps Taken'].sum()
-    st.write(f"Total Steps Taken in the Last Week: {total_steps}")
-    if total_steps < 70000:
-        st.warning("You are below the weekly goal of 70,000 steps. Increase daily activity to stay on track.")
+
+    if not df_fitness.empty:
+        # Summarize data
+        average_steps = df_fitness["Steps Taken"].mean()
+        average_calories = df_fitness["Calories Burned"].mean()
+        average_active_minutes = df_fitness["Active Minutes"].mean()
+
+        # Create user data for recommendations
+        user_data = {
+            "Steps": int(average_steps),
+            "Calories_Burned": int(average_calories),
+            "Active_Minutes": int(average_active_minutes),
+        }
+
+        # Recommendations
+        recommendation_result = recommend_steps(user_data)
+        fitness_suggestion = analyze_fitness(recommendation_result)
+
+        st.success(f"Highlight: {fitness_suggestion}")
+        st.write("Track your activity patterns:")
+        st.write(df_fitness)
+
+        # Fitness Insights
+        total_steps = df_fitness['Steps Taken'].sum()
+        total_calories = df_fitness['Calories Burned'].sum()
+        st.write(f"Total Steps Taken in the Last Week: {total_steps}")
+        st.write(f"Total Calories Burned in the Last Week: {total_calories:.2f} kcal")
+
+        # Suggestions
+        if total_steps < 70000:
+            st.warning("You are below the weekly goal of 70,000 steps. Increase daily activity to stay on track.")
+        if total_calories < 2000:  # Example threshold
+            st.warning("Consider increasing your activity to burn more calories and maintain a healthy balance.")
+
+    else:
+        st.warning("No fitness data available for analysis.")
 
 # Journal Analysis Section
 elif section == "Journal Analysis":
     st.header("Journal Analysis")
-    
-    # Highlight
     st.success("Highlight: Journaling helps manage stress and track goals. Reflect daily on progress and gratitude.")
-    
-    # Analysis
     st.write("Review your daily reflections:")
     st.write("""
     Example Journals:
@@ -82,25 +140,3 @@ elif section == "Journal Analysis":
     - 2024-11-21: "Felt a bit tired but managed to exercise."
     - 2024-11-22: "Focused on relaxation and self-care."
     """)
-
-# Visualizations Section
-elif section == "Visualizations":
-    st.header("Visualizations")
-    
-    # Example 1: Sleep Analysis Graph
-    st.subheader("Sleep Patterns")
-    plt.figure(figsize=(10, 5))
-    sns.lineplot(data=df_sleep, x='Date', y='Hours Slept', marker='o')
-    plt.title("Hours of Sleep Over Time")
-    plt.xlabel("Date")
-    plt.ylabel("Hours Slept")
-    st.pyplot(plt)
-    
-    # Example 2: Fitness Analysis Graph
-    st.subheader("Fitness Patterns")
-    plt.figure(figsize=(10, 5))
-    sns.barplot(data=df_fitness, x='Date', y='Steps Taken', palette='viridis')
-    plt.title("Daily Steps Taken")
-    plt.xlabel("Date")
-    plt.ylabel("Steps Taken")
-    st.pyplot(plt)

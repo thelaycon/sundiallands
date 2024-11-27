@@ -133,5 +133,3 @@ def analyze_sleep():
 
     # Print the resulting dictionary
     return real_dict
-
-print(analyze_sleep())

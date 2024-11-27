@@ -84,25 +84,30 @@ def get_last_days_sleep_data(days=7):
 
     # Get the last 'days' of sleep data
     last_days_data = df.tail(days)  # Get the last 'days' records
+
+    last_days_data.rename(columns={"sleep_duration":"Hours Slept", "sleep_disturbances":"Number of Disturbances"}, errors='raise', inplace=True)
+    last_days_data.rename_axis("Date", inplace=True)
     
-    # Return the last days data as a list of dictionaries
-    return last_days_data.to_dict(orient='records')
+    return last_days_data
 
 def forecast_and_combine(days=7):
-    # Step 1: Extract the metrics and prepare the data for ARIMA (forecasting 'sleep_duration')
+    # Extract the metrics and prepare the data for ARIMA (forecasting 'sleep_duration')
     extracted_metrics = extract_metrics()
     time_series_data = prepare_data_for_arima(extracted_metrics, column='sleep_duration')
 
-    # Step 2: Apply ARIMA to forecast future 'sleep_duration' values
+    # Apply ARIMA to forecast future 'sleep_duration' values
     forecast_df = forecast_with_arima(time_series_data, steps_ahead=days)
 
-    # Step 3: Get the last 'days' of sleep data
+    # Get the last 'days' of sleep data
     last_days_data = get_last_days_sleep_data(days)
 
-    # Step 4: Combine the last sleep data with the forecasted data
+    # Convert the last days data as a list of dictionaries
+    last_days_data = last_days_data.to_dict(orient='records')
+
+    # Combine the last sleep data with the forecasted data
     combined_data = last_days_data + forecast_df.to_dict(orient='records')
 
-    # Step 5: Convert the combined data to JSON string
+    # Convert the combined data to JSON string
     combined_json_str = json.dumps(combined_data, indent=4, default=str)
 
     return combined_json_str
@@ -131,5 +136,6 @@ def analyze_sleep():
     # Convert the cleaned string into a Python dictionary
     real_dict = json.loads(cleaned_resp)
 
-    # Print the resulting dictionary
-    return real_dict
+    suggestion = real_dict['overall_analysis']['suggestion']
+
+    return suggestion

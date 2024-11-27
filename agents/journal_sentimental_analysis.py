@@ -89,5 +89,5 @@ def sentimentalize():
     # Convert the cleaned string into a Python dictionary
     real_dict = json.loads(cleaned_resp)
 
-    # Print the resulting dictionary
+    # Return summary
     return real_dict["Sentimental Analysis"]["Summary"] 

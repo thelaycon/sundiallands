@@ -12,11 +12,33 @@ st.set_page_config(
     page_icon="🌱",  # Icon for the tab
     layout="wide",  # Layout style
     initial_sidebar_state="expanded",  # Start sidebar expanded
-    
+)
+
+# Inject custom CSS for enhanced design
+st.markdown(
+    """
+    <style>
+    .big-title {
+        font-size: 30px;
+        font-weight: bold;
+        color: #4CAF50;
+    }
+    .sub-title {
+        font-size: 20px;
+        color: #FF5733;
+    }
+    .section-header {
+        font-size: 24px;
+        color: #1E90FF;
+        margin-bottom: 10px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
 )
 
 # App title
-st.title("✨ Sundial Lands ✨")
+st.markdown('<div class="big-title">✨ Sundial Lands ✨</div>', unsafe_allow_html=True)
 
 # Sidebar navigation
 section = st.sidebar.selectbox(
@@ -59,8 +81,7 @@ if section == "Health Suggestions":
     insights = combined_insights()
 
     st.balloons()
-
-    st.header("💡 Current Health Suggestions")
+    st.markdown('<div class="section-header">💡 Current Health Suggestions</div>', unsafe_allow_html=True)
     for insight in insights:
         st.markdown(f"- {insight}")
 
@@ -85,7 +106,6 @@ if section == "Health Suggestions":
     # Fitness Data Visualization
     if not df_fitness.empty:
         st.subheader("🏃‍♂️ Fitness Patterns")
-
         df_fitness_reset = df_fitness.reset_index()
 
         # Steps Taken Visualization
@@ -120,7 +140,7 @@ if section == "Health Suggestions":
 elif section == "Sleep Analysis":
     sleep_suggestion = analyze_sleep()
 
-    st.header("🛏️ Sleep Analysis")
+    st.markdown('<div class="section-header">🛏️ Sleep Analysis</div>', unsafe_allow_html=True)
     st.success(f"✨ Highlight: {sleep_suggestion}")
     st.write("Analyze your sleep patterns below:")
 
@@ -135,7 +155,7 @@ elif section == "Sleep Analysis":
 
 # Fitness Analysis Section
 elif section == "Fitness Analysis":
-    st.header("💪 Fitness Analysis")
+    st.markdown('<div class="section-header">💪 Fitness Analysis</div>', unsafe_allow_html=True)
 
     if not df_fitness.empty:
         # Summarize data
@@ -156,7 +176,6 @@ elif section == "Fitness Analysis":
 
         st.success(f"✨ Highlight: {fitness_suggestion}")
         st.write("Track your activity patterns:")
-
         st.write(df_fitness)
 
         # Fitness Insights
@@ -175,24 +194,16 @@ elif section == "Fitness Analysis":
 
 # Journal Analysis Section
 elif section == "Journal Analysis":
-    # Get the summary and journal entries
     summary = sentimentalize()
     journal_entries = get_last_days_journal_entries()
 
-    st.header("📓 Journal Analysis")
-
-    # Display the summary as a highlight
+    st.markdown('<div class="section-header">📓 Journal Analysis</div>', unsafe_allow_html=True)
     st.success(f"✨ Highlight: {summary}")
 
-    # Review of daily reflections
-    st.write("Review your daily reflections:")
-
     if not journal_entries.empty:
-        # Reset index to include 'Date' as a column for better display
         journal_entries_reset = journal_entries.reset_index()
-
-        # Display journal entries
         for _, row in journal_entries_reset.iterrows():
-            st.write(f"**{row['Date'].strftime('%Y-%m-%d')}**: {row['Entry']}")
+            with st.expander(f"{row['Date'].strftime('%Y-%m-%d')} Entry"):
+                st.write(row['Entry'])
     else:
         st.warning("No journal entries found for the last 7 days.")

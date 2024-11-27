@@ -71,4 +71,4 @@ health_data = HealthData.load_from_file("data/health_data.json")
 normalized_data = health_data.normalize_all()
 
 # Save the normalized data back to a file
-health_data.save_to_file("normalized_health_data.json")
+health_data.save_to_file("data/normalized_health_data.json")

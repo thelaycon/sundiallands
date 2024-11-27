@@ -1,5 +1,5 @@
 import json
-from views.normalize import HealthData
+from data.normalize import HealthData
 
 class Data:
     def __init__(self, file_path):
@@ -21,5 +21,13 @@ class Data:
     def get_data(self):
         return self.data
 
+# Load the JSON data from a file
+health_data = HealthData.load_from_file("data/health_data.json")
 
-data = Data("data/health_data.json")
+# Normalize all metrics
+normalized_data = health_data.normalize_all()
+
+# Save the normalized data back to a file
+health_data.save_to_file("data/normalized_health_data.json")
+
+data = Data("data/normalized_health_data.json")

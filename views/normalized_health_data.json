@@ -1,0 +1,179 @@
+{
+    "user_id": "12345",
+    "metrics": [
+        {
+            "date": "2024-11-22",
+            "steps": 8500,
+            "heart_rate": 75,
+            "hrv": 45,
+            "calories_burned": 300,
+            "active_minutes": 45,
+            "sleep_data": {
+                "duration": 6.5,
+                "disturbances": 3
+            },
+            "normalized_steps": 0.85,
+            "normalized_heart_rate": 0.75,
+            "normalized_sleep_hours": 0.8125,
+            "normalized_hrv": 0.9
+        },
+        {
+            "date": "2024-11-21",
+            "steps": 9500,
+            "heart_rate": 72,
+            "hrv": 50,
+            "calories_burned": 350,
+            "active_minutes": 50,
+            "sleep_data": {
+                "duration": 7.2,
+                "disturbances": 2
+            },
+            "normalized_steps": 0.95,
+            "normalized_heart_rate": 0.6,
+            "normalized_sleep_hours": 0.9,
+            "normalized_hrv": 1.0
+        },
+        {
+            "date": "2024-11-20",
+            "steps": 7800,
+            "heart_rate": 70,
+            "hrv": 42,
+            "calories_burned": 280,
+            "active_minutes": 40,
+            "sleep_data": {
+                "duration": 5.8,
+                "disturbances": 4
+            },
+            "normalized_steps": 0.78,
+            "normalized_heart_rate": 0.5,
+            "normalized_sleep_hours": 0.725,
+            "normalized_hrv": 0.84
+        },
+        {
+            "date": "2024-11-19",
+            "steps": 10200,
+            "heart_rate": 77,
+            "hrv": 47,
+            "calories_burned": 400,
+            "active_minutes": 60,
+            "sleep_data": {
+                "duration": 7.5,
+                "disturbances": 1
+            },
+            "normalized_steps": 1.02,
+            "normalized_heart_rate": 0.85,
+            "normalized_sleep_hours": 0.9375,
+            "normalized_hrv": 0.94
+        },
+        {
+            "date": "2024-11-18",
+            "steps": 6700,
+            "heart_rate": 68,
+            "hrv": 44,
+            "calories_burned": 250,
+            "active_minutes": 35,
+            "sleep_data": {
+                "duration": 6.1,
+                "disturbances": 3
+            },
+            "normalized_steps": 0.67,
+            "normalized_heart_rate": 0.4,
+            "normalized_sleep_hours": 0.7625,
+            "normalized_hrv": 0.88
+        },
+        {
+            "date": "2024-11-17",
+            "steps": 8900,
+            "heart_rate": 74,
+            "hrv": 48,
+            "calories_burned": 320,
+            "active_minutes": 55,
+            "sleep_data": {
+                "duration": 6.8,
+                "disturbances": 2
+            },
+            "normalized_steps": 0.89,
+            "normalized_heart_rate": 0.7,
+            "normalized_sleep_hours": 0.85,
+            "normalized_hrv": 0.96
+        },
+        {
+            "date": "2024-11-16",
+            "steps": 9100,
+            "heart_rate": 73,
+            "hrv": 51,
+            "calories_burned": 330,
+            "active_minutes": 50,
+            "sleep_data": {
+                "duration": 7.0,
+                "disturbances": 1
+            },
+            "normalized_steps": 0.91,
+            "normalized_heart_rate": 0.65,
+            "normalized_sleep_hours": 0.875,
+            "normalized_hrv": 1.02
+        },
+        {
+            "date": "2024-11-15",
+            "steps": 6200,
+            "heart_rate": 71,
+            "hrv": 40,
+            "calories_burned": 220,
+            "active_minutes": 30,
+            "sleep_data": {
+                "duration": 5.5,
+                "disturbances": 5
+            },
+            "normalized_steps": 0.62,
+            "normalized_heart_rate": 0.55,
+            "normalized_sleep_hours": 0.6875,
+            "normalized_hrv": 0.8
+        },
+        {
+            "date": "2024-11-14",
+            "steps": 10400,
+            "heart_rate": 78,
+            "hrv": 52,
+            "calories_burned": 420,
+            "active_minutes": 65,
+            "sleep_data": {
+                "duration": 7.8,
+                "disturbances": 1
+            },
+            "normalized_steps": 1.04,
+            "normalized_heart_rate": 0.9,
+            "normalized_sleep_hours": 0.975,
+            "normalized_hrv": 1.04
+        },
+        {
+            "date": "2024-11-13",
+            "steps": 8000,
+            "heart_rate": 75,
+            "hrv": 46,
+            "calories_burned": 290,
+            "active_minutes": 40,
+            "sleep_data": {
+                "duration": 6.0,
+                "disturbances": 3
+            },
+            "normalized_steps": 0.8,
+            "normalized_heart_rate": 0.75,
+            "normalized_sleep_hours": 0.75,
+            "normalized_hrv": 0.92
+        }
+    ],
+    "journal_entries": [
+        {
+            "date": "2024-11-22",
+            "entry": "I feel really anxious about the upcoming presentation. It's overwhelming."
+        },
+        {
+            "date": "2024-11-21",
+            "entry": "Felt motivated today but struggled with focus during work hours."
+        },
+        {
+            "date": "2024-11-20",
+            "entry": "Exhausted and had trouble sleeping. Need to work on managing stress."
+        }
+    ]
+}

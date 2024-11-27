@@ -1,8 +1,6 @@
 import json
-import pandas as pd
 
 class HealthData:
-
     def __init__(self, data):
         self.data = data
 
@@ -33,10 +31,11 @@ class HealthData:
 
     def normalize_sleep_hours(self, ideal_sleep=8):
         """
-        Normalize sleep hours to a range of 0 to 1 based on an ideal sleep threshold.
+        Normalize sleep duration to a range of 0 to 1 based on an ideal sleep threshold.
         """
         for metric in self.data["metrics"]:
-            metric["normalized_sleep_hours"] = metric["sleep_hours"] / ideal_sleep
+            if "sleep_data" in metric and "duration" in metric["sleep_data"]:
+                metric["normalized_sleep_hours"] = metric["sleep_data"]["duration"] / ideal_sleep
         return self.data
 
     def normalize_hrv(self, max_hrv=50):
@@ -63,3 +62,13 @@ class HealthData:
         """
         with open(output_path, "w") as f:
             json.dump(self.data, f, indent=4)
+
+
+# Load the JSON data from a file
+health_data = HealthData.load_from_file("../data/health_data.json")
+
+# Normalize all metrics
+normalized_data = health_data.normalize_all()
+
+# Save the normalized data back to a file
+health_data.save_to_file("normalized_health_data.json")

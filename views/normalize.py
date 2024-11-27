@@ -65,7 +65,7 @@ class HealthData:
 
 
 # Load the JSON data from a file
-health_data = HealthData.load_from_file("../data/health_data.json")
+health_data = HealthData.load_from_file("data/health_data.json")
 
 # Normalize all metrics
 normalized_data = health_data.normalize_all()

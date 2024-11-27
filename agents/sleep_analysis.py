@@ -16,11 +16,13 @@ def extract_metrics():
         # Extract the relevant information
         date = entry.get("date")
         sleep_duration = entry.get("sleep_data", {}).get("duration")
+        sleep_disturbances = entry.get("sleep_data", {}).get("disturbances")
         
         # Create a dictionary for each entry
         data_entry = {
             "date": date,
             "sleep_duration": sleep_duration,
+            "sleep_disturbances": sleep_disturbances
         }
 
         # Add the data entry to the list
@@ -102,6 +104,6 @@ def forecast_and_combine(days=7):
 
     return combined_json_str
 
-# # Example usage:
-# forecast_json_str = forecast_and_combine(days=7)
-# print(forecast_json_str)
+# Example usage:
+forecast_json_str = forecast_and_combine(days=7)
+print(forecast_json_str)

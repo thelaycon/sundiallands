@@ -9,7 +9,7 @@
           "calories_burned": 300,
           "active_minutes": 45,
           "sleep_data": {
-              "duration": 6.5,
+              "duration": 10.5,
               "disturbances": 3
           }
       },
@@ -21,7 +21,7 @@
           "calories_burned": 350,
           "active_minutes": 50,
           "sleep_data": {
-              "duration": 7.2,
+              "duration": 17.2,
               "disturbances": 2
           }
       },

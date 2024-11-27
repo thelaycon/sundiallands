@@ -9,12 +9,12 @@
             "calories_burned": 300,
             "active_minutes": 45,
             "sleep_data": {
-                "duration": 6.5,
+                "duration": 10.5,
                 "disturbances": 3
             },
             "normalized_steps": 0.85,
             "normalized_heart_rate": 0.75,
-            "normalized_sleep_hours": 0.8125,
+            "normalized_sleep_hours": 1.3125,
             "normalized_hrv": 0.9
         },
         {
@@ -25,12 +25,12 @@
             "calories_burned": 350,
             "active_minutes": 50,
             "sleep_data": {
-                "duration": 7.2,
+                "duration": 17.2,
                 "disturbances": 2
             },
             "normalized_steps": 0.95,
             "normalized_heart_rate": 0.6,
-            "normalized_sleep_hours": 0.9,
+            "normalized_sleep_hours": 2.15,
             "normalized_hrv": 1.0
         },
         {

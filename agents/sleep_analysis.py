@@ -44,7 +44,6 @@ def prepare_data_for_arima(extracted_data, column):
 
     return time_series_data
 
-
 def forecast_with_arima(time_series_data, steps_ahead=5):
     # Fit the ARIMA model
     model = ARIMA(time_series_data, order=(1, 1, 0))  
@@ -65,21 +64,44 @@ def forecast_with_arima(time_series_data, steps_ahead=5):
 
     return forecast_df
 
-def forecast(days=7):
+def get_last_days_sleep_data(days=7):
     # Extract the metrics
     extracted_metrics = extract_metrics()
 
-    # Prepare the data for ARIMA (forecasting 'sleep_duration')
+    # Convert the extracted data into a pandas DataFrame
+    df = pd.DataFrame(extracted_metrics)
+
+    # Convert 'date' column to datetime format and ensure it's a datetime index
+    df['date'] = pd.to_datetime(df['date'])
+
+    # Set 'date' as the index
+    df.set_index('date', inplace=True)
+
+    # Get the last 'days' of sleep data
+    last_days_data = df.tail(days)  # Get the last 'days' records
+    
+    # Return the last days data as a list of dictionaries
+    return last_days_data.to_dict(orient='records')
+
+def forecast_and_combine(days=7):
+    # Step 1: Extract the metrics and prepare the data for ARIMA (forecasting 'sleep_duration')
+    extracted_metrics = extract_metrics()
     time_series_data = prepare_data_for_arima(extracted_metrics, column='sleep_duration')
 
-    # Apply ARIMA to forecast future 'sleep_duration' values
+    # Step 2: Apply ARIMA to forecast future 'sleep_duration' values
     forecast_df = forecast_with_arima(time_series_data, steps_ahead=days)
 
-    # Convert the DataFrame to a JSON string
-    forecast_json_str = forecast_df.to_json(orient='records', date_format='iso')
-    
-    return forecast_json_str
+    # Step 3: Get the last 'days' of sleep data
+    last_days_data = get_last_days_sleep_data(days)
+
+    # Step 4: Combine the last sleep data with the forecasted data
+    combined_data = last_days_data + forecast_df.to_dict(orient='records')
+
+    # Step 5: Convert the combined data to JSON string
+    combined_json_str = json.dumps(combined_data, indent=4, default=str)
+
+    return combined_json_str
 
 # # Example usage:
-# forecast_json_str = forecast(days=7)
+# forecast_json_str = forecast_and_combine(days=7)
 # print(forecast_json_str)

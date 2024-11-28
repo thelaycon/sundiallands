@@ -1,6 +1,6 @@
 # Sundial Lands Health Monitor
 
-Welcome to the Sundial Lands Health Monitor! This project provides a suite of AI-driven agents designed to analyze and provide insights on sleep, journal sentiment, and fitness activity. These agents work with user data and provide personalized suggestions to improve overall health. The insights from all agents are integrated into one comprehensive view, which is displayed on the homepage.
+This project provides a suite of AI-driven agents designed to analyze and provide insights on sleep, journal sentiment, and fitness activity. These agents work with user data and provide personalized suggestions to improve overall health. The insights from all agents are integrated into one comprehensive view, which is displayed on the homepage.
 
 ## Project Setup
 
